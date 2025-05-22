@@ -1,13 +1,17 @@
 package dsgo
 
-import "fmt"
-
 // Heap This is max heap implementation
-type Heap struct {
+type heap struct {
 	arr []int
 }
 
-func (h *Heap) Insert(val int) {
+// NewHeap creating new Heap
+func NewHeap() heap {
+	return heap{}
+}
+
+// Insert : Insert element into heap
+func (h *heap) Insert(val int) {
 	h.arr = append(h.arr, val)
 	if len(h.arr) == 1 {
 		return
@@ -15,7 +19,8 @@ func (h *Heap) Insert(val int) {
 	updateAfterInsert(h.arr, len(h.arr)-1)
 }
 
-func (h *Heap) Pop() int {
+// Pop : Pop minimum element from the heap
+func (h *heap) Pop() int {
 	if len(h.arr) == 0 {
 		return -1
 	}
@@ -24,7 +29,9 @@ func (h *Heap) Pop() int {
 	updateAfterRemove(h)
 	return element
 }
-func updateAfterRemove(h *Heap) {
+
+// updateAfterRemove after removing root element update the heap tree
+func updateAfterRemove(h *heap) {
 	for i := 0; i < len(h.arr); i++ {
 		if leftChild(i) < len(h.arr) && h.arr[i] <= h.arr[leftChild(i)] {
 			h.arr[i], h.arr[leftChild(i)] = h.arr[leftChild(i)], h.arr[i]
@@ -38,13 +45,7 @@ func updateAfterRemove(h *Heap) {
 	}
 }
 
-func (h *Heap) ShowArray() {
-	for i := 0; i < len(h.arr); i++ {
-		fmt.Printf("%v ", h.arr[i])
-	}
-	fmt.Println()
-}
-
+// updateAfterInsert after insert new element update the min heap
 func updateAfterInsert(arr []int, idx int) {
 	for idx > 0 {
 		if arr[idx] > arr[parent(idx)] {
@@ -54,14 +55,17 @@ func updateAfterInsert(arr []int, idx int) {
 	}
 }
 
+// parent return the parent index from heap array
 func parent(index int) int {
 	return ((index + 1) / 2) - 1
 }
 
+// leftChild return the left index of an element from heap array
 func leftChild(index int) int {
 	return index*2 + 1
 }
 
+// rightChild return the right index of an element from heap array
 func rightChild(index int) int {
 	return index*2 + 2
 }
