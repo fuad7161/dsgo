@@ -1,5 +1,5 @@
 // file: greet.go
-package mypackage
+package dsgo
 
 import "fmt"
 
