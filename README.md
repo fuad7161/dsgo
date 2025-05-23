@@ -24,8 +24,8 @@ go get github.com/fuad7161/dsgo
 | [Doubly Linked List](#doubly-linked-list) | [B-Tree](#b-tree)             |                           |                           |                               |                                   |
 | [Circular Linked List](#circular-linked-list) | [B+ Tree](#b-tree-1)          |                           |                           |                               |                                   |
 
-## Stack
-🧭 Stack Methods Overview |  [🔝 Back to Top](#Jump-to-Specific-Data-Structures)
+## Stack [🔝 Back to Top](#Jump-to-Specific-Data-Structures)
+🧭 Stack Methods Overview
 ```go
 func main() {
 	// Create a stack of integers
@@ -61,8 +61,8 @@ func main() {
 
 ```
 
-## Queue
-🧭 Stack Methods Overview |  [🔝 Back to Top](#Jump-to-Specific-Data-Structures)
+## Queue  [🔝 Back to Top](#Jump-to-Specific-Data-Structures)
+🧭 Stack Methods Overview
 ```go
 func main() {
 	// Create a queue of integers
