@@ -1,4 +1,4 @@
-package dsgo
+package LinearDataStructures
 
 import "fmt"
 
