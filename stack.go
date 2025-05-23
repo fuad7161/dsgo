@@ -1,41 +1,68 @@
 package dsgo
 
-type stack struct {
-	arr []int
+import "fmt"
+
+// Stack is a generic stack implementation using a slice.
+type Stack[T any] struct {
+	elements []T
 }
 
-// NewStack Create a new stack
-func NewStack() stack {
-	return stack{}
+// NewStack creates and returns a new empty Stack.
+func NewStack[T any]() *Stack[T] {
+	return &Stack[T]{make([]T, 0)}
 }
 
-// Push element into the stack
-func (st *stack) Push(val int) {
-	st.arr = append(st.arr, val)
+// Peek returns the top element without removing it from the stack.
+// Returns an error if the stack is empty.
+func (s *Stack[T]) Peek() (T, error) {
+	return s.Back()
 }
 
-// Pop element from the stack and remove element
-func (st *stack) Pop() int {
-	if st.Len() == 0 {
-		return -1
+// Push adds an element to the top of the stack.
+func (s *Stack[T]) Push(v T) {
+	s.elements = append(s.elements, v)
+}
+
+// Pop removes and returns the top element of the stack.
+// Returns an error if the stack is empty.
+func (s *Stack[T]) Pop() (T, error) {
+	if s.Empty() {
+		var zero T
+		return zero, fmt.Errorf("stack is empty")
 	}
-	var lastValue = st.arr[st.Len()-1]
-	st.arr = st.arr[:st.Len()-1]
-	return lastValue
+	top, _ := s.Back()
+	s.elements = s.elements[:s.Len()-1]
+	return top, nil
 }
 
-// Peek last added element without removing
-func (st *stack) Peek() int {
-	if st.Len() == 0 {
-		return -1
+// Len returns the number of elements in the stack.
+func (s *Stack[T]) Len() int {
+	return len(s.elements)
+}
+
+// Back returns the top element of the stack without removing it.
+// Returns an error if the stack is empty.
+func (s *Stack[T]) Back() (T, error) {
+	if s.Empty() {
+		var zero T
+		return zero, fmt.Errorf("stack is empty")
 	}
-	return st.arr[st.Len()-1]
+	return s.elements[s.Len()-1], nil
 }
 
-func (st *stack) isEmpty() bool {
-	return st.Len() == 0
+// Empty checks whether the stack has no elements.
+func (s *Stack[T]) Empty() bool {
+	return s.Len() == 0
 }
 
-func (st *stack) Len() int {
-	return len(st.arr)
+// Clear removes all elements from the stack.
+func (s *Stack[T]) Clear() {
+	s.elements = nil
+}
+
+// ToSlice returns a copy of the underlying slice (LIFO order preserved).
+func (s *Stack[T]) ToSlice() []T {
+	result := make([]T, s.Len())
+	copy(result, s.elements)
+	return result
 }
