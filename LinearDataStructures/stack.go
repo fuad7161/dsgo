@@ -89,15 +89,19 @@ func (s *stack[T]) Empty() bool {
 	return s.Size() == 0
 }
 
-// Peek returns the top element without removing it from the stack.
-// Returns an error if the stack is empty.
-func (s *stack[T]) Peek() (T, error) {
-	return s.Back()
-}
-
 // Size returns the number of elements in the stack.
 func (s *stack[T]) Size() int {
 	return len(s.elements)
+}
+
+// Top returns the top element of the stack without removing it.
+// Returns an error if the stack is empty.
+func (s *stack[T]) Top() (T, error) {
+	if s.Empty() {
+		var zero T
+		return zero, fmt.Errorf("stack is empty")
+	}
+	return s.elements[s.Size()-1], nil
 }
 
 // Push adds an element to the top of the stack.
@@ -107,24 +111,12 @@ func (s *stack[T]) Push(v T) {
 
 // Pop removes and returns the top element of the stack.
 // Returns an error if the stack is empty.
-func (s *stack[T]) Pop() (T, error) {
+func (s *stack[T]) Pop() error {
 	if s.Empty() {
-		var zero T
-		return zero, fmt.Errorf("stack is empty")
+		return fmt.Errorf("stack is empty")
 	}
-	top, _ := s.Back()
 	s.elements = s.elements[:s.Size()-1]
-	return top, nil
-}
-
-// Back returns the top element of the stack without removing it.
-// Returns an error if the stack is empty.
-func (s *stack[T]) Back() (T, error) {
-	if s.Empty() {
-		var zero T
-		return zero, fmt.Errorf("stack is empty")
-	}
-	return s.elements[s.Size()-1], nil
+	return nil
 }
 
 // Clear removes all elements from the stack.
@@ -137,4 +129,8 @@ func (s *stack[T]) ToSlice() []T {
 	result := make([]T, s.Size())
 	copy(result, s.elements)
 	return result
+}
+
+func (s *stack[T]) Swap(s1 *stack[T]) {
+	*s, *s1 = *s1, *s
 }

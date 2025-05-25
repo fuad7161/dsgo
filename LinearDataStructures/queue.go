@@ -121,14 +121,12 @@ func (q *queue[T]) Push(v T) {
 
 // Pop removes and returns the front element of the queue.
 // Returns an error if the queue is empty.
-func (q *queue[T]) Pop() (T, error) {
+func (q *queue[T]) Pop() error {
 	if q.Empty() {
-		var zero T
-		return zero, fmt.Errorf("queue is empty")
+		return fmt.Errorf("queue is empty")
 	}
-	front := q.elements[0]
 	q.elements = q.elements[1:]
-	return front, nil
+	return nil
 }
 
 // Clear removes all elements from the queue.
@@ -141,4 +139,8 @@ func (q *queue[T]) ToSlice() []T {
 	result := make([]T, q.Size())
 	copy(result, q.elements)
 	return result
+}
+
+func (q *queue[T]) Swap(q1 *queue[T]) {
+	*q, *q1 = *q1, *q
 }
