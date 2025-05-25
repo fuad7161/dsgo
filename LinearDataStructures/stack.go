@@ -84,10 +84,20 @@ func NewStack[T any]() *stack[T] {
 	return &stack[T]{make([]T, 0)}
 }
 
+// Empty checks whether the stack has no elements.
+func (s *stack[T]) Empty() bool {
+	return s.Size() == 0
+}
+
 // Peek returns the top element without removing it from the stack.
 // Returns an error if the stack is empty.
 func (s *stack[T]) Peek() (T, error) {
 	return s.Back()
+}
+
+// Size returns the number of elements in the stack.
+func (s *stack[T]) Size() int {
+	return len(s.elements)
 }
 
 // Push adds an element to the top of the stack.
@@ -103,13 +113,8 @@ func (s *stack[T]) Pop() (T, error) {
 		return zero, fmt.Errorf("stack is empty")
 	}
 	top, _ := s.Back()
-	s.elements = s.elements[:s.Len()-1]
+	s.elements = s.elements[:s.Size()-1]
 	return top, nil
-}
-
-// Len returns the number of elements in the stack.
-func (s *stack[T]) Len() int {
-	return len(s.elements)
 }
 
 // Back returns the top element of the stack without removing it.
@@ -119,12 +124,7 @@ func (s *stack[T]) Back() (T, error) {
 		var zero T
 		return zero, fmt.Errorf("stack is empty")
 	}
-	return s.elements[s.Len()-1], nil
-}
-
-// Empty checks whether the stack has no elements.
-func (s *stack[T]) Empty() bool {
-	return s.Len() == 0
+	return s.elements[s.Size()-1], nil
 }
 
 // Clear removes all elements from the stack.
@@ -134,7 +134,7 @@ func (s *stack[T]) Clear() {
 
 // ToSlice returns a copy of the underlying slice (LIFO order preserved).
 func (s *stack[T]) ToSlice() []T {
-	result := make([]T, s.Len())
+	result := make([]T, s.Size())
 	copy(result, s.elements)
 	return result
 }
