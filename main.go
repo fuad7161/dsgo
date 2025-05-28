@@ -2,20 +2,14 @@ package main
 
 import (
 	"fmt"
-	dsgo "github.com/fuad7161/dsgo/LinearDataStructures"
+	heap "github.com/fuad7161/dsgo/Heap-Structures"
 )
 
 func main() {
-	var dq = dsgo.DequeInt()
+	var pq = heap.PriorityQueue(heap.MaxString())
 
-	dq.PushFront(100) // 1000
-	dq.PushBack(50)   // 100, 50
-	dq.PushFront(90)  // 90 , 100 , 50
+	pq.Push("Fuad")
+	pq.Push("Masud")
 
-	fmt.Println(dq.Front())
-	fmt.Println(dq.Back())
-	dq.PopFront() // 100, 50
-
-	fmt.Println(dq.Front())
-	fmt.Println(dq.Back())
+	fmt.Println(pq.Top())
 }
