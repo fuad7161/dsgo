@@ -5,21 +5,17 @@ import (
 	dsgo "github.com/fuad7161/dsgo/LinearDataStructures"
 )
 
-type person struct {
-	name string
-	age  int
-}
-
 func main() {
-	var s1 = dsgo.StackInt()
-	s1.Push(100)
-	s1.Push(200)
-	var s2 = dsgo.StackInt()
-	//var s2 = s1.ToSlice()
-	s2.Push(300)
-	fmt.Println(s1.Top())
-	fmt.Println(s2.Top())
-	s1.Swap(s2)
-	fmt.Println(s1.Top())
-	fmt.Println(s2.Top())
+	var dq = dsgo.DequeInt()
+
+	dq.PushFront(100) // 1000
+	dq.PushBack(50)   // 100, 50
+	dq.PushFront(90)  // 90 , 100 , 50
+
+	fmt.Println(dq.Front())
+	fmt.Println(dq.Back())
+	dq.PopFront() // 100, 50
+
+	fmt.Println(dq.Front())
+	fmt.Println(dq.Back())
 }
